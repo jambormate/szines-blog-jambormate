@@ -7,7 +7,22 @@
     <title>szines-blog-jambormate</title>
   </head>
   <body>
-    <div id="app"></div>
+    <form id="szinesForm">
+      <label>
+        Cím:
+      </label>
+      <input type="text" id="title">
+      <label>
+        Tartalom:
+      </label>
+      <textarea id="content" rows="4"></textarea>
+      <label>
+        Szín:
+      </label>
+      <input type="color" id="color">
+    <button type="submit">Hozzáadás</button>
+  </form>
+  <main id="blog"></main>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

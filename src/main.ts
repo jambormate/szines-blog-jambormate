@@ -1,24 +1,43 @@
-import './style.css'
-import typescriptLogo from './typescript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.ts'
+import { Bejegyzes } from "./bejegyzes"
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://www.typescriptlang.org/" target="_blank">
-      <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
-    </a>
-    <h1>Vite + TypeScript</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite and TypeScript logos to learn more
-    </p>
-  </div>
-`
+const bejegyzesek: Bejegyzes[] = [
+    new Bejegyzes("Tesztike 1", "Valami filler szöveg.", "#ff66b2"),
+    new Bejegyzes("Tesztike 2", "Töltelék...", "#1f51ff")
+]
+const form = document.getElementById("szinesForm") as HTMLFormElement
+const mainElem = document.getElementById("blog") as HTMLElement
+const titleInput = document.getElementById("title") as HTMLInputElement
+const contentInput = document.getElementById("content") as HTMLTextAreaElement
+const colorInput = document.getElementById("color") as HTMLInputElement
 
-setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
+function megjelenit(){
+    mainElem.innerHTML = ""
+    for (const bejegyzes of bejegyzesek) {
+        const article = document.createElement("article")
+        article.style.color = bejegyzes.color
+        const h2 = document.createElement("h2")
+        h2.textContent = bejegyzes.title
+        const p = document.createElement("p")
+        p.textContent = bejegyzes.content
+        article.appendChild(h2)
+        article.appendChild(p)
+        mainElem.appendChild(article)
+    }
+}
+form.addEventListener("submit", (e) => {
+    e.preventDefault()
+    try {
+        const ujBejegyzes = new Bejegyzes(
+            titleInput.value,
+            contentInput.value,
+            colorInput.value
+        )
+        bejegyzesek.push(ujBejegyzes)
+        megjelenit()
+        form.reset()
+    } catch (error) {
+        alert((error as Error).message)
+    }
+})
+
+megjelenit()
